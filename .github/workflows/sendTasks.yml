@@ -1,0 +1,28 @@
+name: Send Daily Tasks
+
+on:
+  [push]
+  # schedule:
+  #   - cron: "0 23 * * *" # GitHub Actions uses UTC, so 23:00 UTC is 8:00 JST
+
+jobs:
+  send-tasks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.0" # 必要なPHPバージョンに変更してください
+
+      - name: Install curl
+        run: sudo apt-get install -y curl
+
+      - name: Run PHP script
+        run: php sendTasks.php
+        env:
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          USER_ID_TO_SEND_MESSAGE: ${{ secrets.USER_ID_TO_SEND_MESSAGE }}
