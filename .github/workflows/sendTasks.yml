@@ -1,9 +1,8 @@
 name: Send Daily Tasks
 
 on:
-  [push]
-  # schedule:
-  #   - cron: "0 23 * * *" # GitHub Actions uses UTC, so 23:00 UTC is 8:00 JST
+  schedule:
+    - cron: "0 23 * * *" # GitHub Actions uses UTC, so 23:00 UTC is 8:00 JST
 
 jobs:
   send-tasks:
