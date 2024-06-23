@@ -35,13 +35,16 @@ function sendLineMessage($message)
 
 function getTodayTasks()
 {
-    // ここでその日のタスクを取得するロジックを実装します
-    // 例として静的なタスクリストを返す
-    return [
-        '朝のミーティング',
-        'プロジェクト作業',
-        'レポート作成'
-    ];
+    $jsonFile = 'tasks.json';
+    if (!file_exists($jsonFile)) {
+        return ['タスクが見つかりませんでした。'];
+    }
+
+    $jsonData = file_get_contents($jsonFile);
+    $tasksData = json_decode($jsonData, true);
+
+    $today = date('Y-m-d');
+    return $tasksData[$today] ?? ['今日のタスクは設定されていません。'];
 }
 
 $tasks = getTodayTasks();
