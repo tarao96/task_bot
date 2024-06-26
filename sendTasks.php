@@ -43,7 +43,10 @@ function getTodayTasks()
     $jsonData = file_get_contents($jsonFile);
     $tasksData = json_decode($jsonData, true);
 
-    $today = date('Y-m-d');
+    // 現在時刻をJSTに設定
+    $dateTime = new DateTime('now', new DateTimeZone('Asia/Tokyo'));
+    $today = $dateTime->format('Y-m-d');
+
     return $tasksData[$today] ?? ['今日のタスクは設定されていません。'];
 }
 
